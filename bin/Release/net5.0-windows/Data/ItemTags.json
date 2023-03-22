@@ -1,0 +1,586 @@
+{
+  "Weapon Type": [
+    {
+      "tag_id": "271",
+      "tag": "1 Handed",
+      "category": "Weapon Type",
+      "format": null
+    },
+    {
+      "tag_id": "270",
+      "tag": "2 Handed",
+      "category": "Weapon Type",
+      "format": null
+    }
+  ],
+  "Skills": [
+    {
+      "tag_id": "161",
+      "tag": "Amazon",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "151",
+      "tag": "Assassin",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "147",
+      "tag": "Barbarian",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "162",
+      "tag": "Bow and Crossbow",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "183",
+      "tag": "Cold",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "148",
+      "tag": "Combat",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "177",
+      "tag": "Curses",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "159",
+      "tag": "Defensive Auras",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "169",
+      "tag": "Druid",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "172",
+      "tag": "Elemental",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "181",
+      "tag": "Fire",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "164",
+      "tag": "Javelin and Spear",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "182",
+      "tag": "Lightning",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "154",
+      "tag": "Martial Arts",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "149",
+      "tag": "Masteries",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "176",
+      "tag": "Necromancer",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "158",
+      "tag": "Offensive Auras",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "157",
+      "tag": "Paladin",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "163",
+      "tag": "Passive and Magic",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "178",
+      "tag": "Poison and Bone",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "153",
+      "tag": "Shadow Disciplines",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "171",
+      "tag": "Shape Shifting",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "180",
+      "tag": "Sorceress",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "170",
+      "tag": "Summoning",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "152",
+      "tag": "Traps",
+      "category": "Skills",
+      "format": null
+    },
+    {
+      "tag_id": "150",
+      "tag": "Warcries",
+      "category": "Skills",
+      "format": null
+    }
+  ],
+  "Item Type": [
+    {
+      "tag_id": "204",
+      "tag": "Amazon Bow",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "206",
+      "tag": "Amazon Javelin",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "205",
+      "tag": "Amazon Spear",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "210",
+      "tag": "Amulet",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "185",
+      "tag": "Axe",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "173",
+      "tag": "Barbarian Helm",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "166",
+      "tag": "Belt",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "155",
+      "tag": "Body Armor",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "209",
+      "tag": "Book",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "165",
+      "tag": "Boot",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "199",
+      "tag": "Bow",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "228",
+      "tag": "Charm",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "179",
+      "tag": "Circlet",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "202",
+      "tag": "Claw",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "187",
+      "tag": "Club",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "213",
+      "tag": "Consumable",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "200",
+      "tag": "Crossbow",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "192",
+      "tag": "Dagger",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "207",
+      "tag": "Elixir",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "217",
+      "tag": "Gem",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "160",
+      "tag": "Glove",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "190",
+      "tag": "Hammer",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "145",
+      "tag": "Helm",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "195",
+      "tag": "Javelin",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "220",
+      "tag": "Jewel",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "215",
+      "tag": "key",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "189",
+      "tag": "Mace",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "226",
+      "tag": "Melee",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "203",
+      "tag": "Orb",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "174",
+      "tag": "Paladin Shield",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "168",
+      "tag": "Pelt",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "197",
+      "tag": "Polearm",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "201",
+      "tag": "Potion",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "212",
+      "tag": "Quest",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "224",
+      "tag": "Ranged",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "211",
+      "tag": "Ring",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "219",
+      "tag": "rune",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "188",
+      "tag": "Scepter",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "156",
+      "tag": "Shield",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "196",
+      "tag": "Spear",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "198",
+      "tag": "Stave",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "191",
+      "tag": "Sword",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "194",
+      "tag": "Throwing Axe",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "193",
+      "tag": "Throwing Knife",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "175",
+      "tag": "Voodoo Head",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "186",
+      "tag": "Wand",
+      "category": "Item Type",
+      "format": null
+    },
+    {
+      "tag_id": "225",
+      "tag": "Weapon",
+      "category": "Item Type",
+      "format": null
+    }
+  ],
+  "Body Location": [
+    {
+      "tag_id": "247",
+      "tag": "Arm",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "256",
+      "tag": "Feet",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "287",
+      "tag": "Finger",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "251",
+      "tag": "Hands",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "237",
+      "tag": "Head",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "268",
+      "tag": "Neck",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "246",
+      "tag": "Torso",
+      "category": "Body Location",
+      "format": null
+    },
+    {
+      "tag_id": "286",
+      "tag": "Waist",
+      "category": "Body Location",
+      "format": null
+    }
+  ],
+  "Craft Type": [
+    {
+      "tag_id": "277",
+      "tag": "Blood",
+      "category": "Craft Type",
+      "format": null
+    },
+    {
+      "tag_id": "278",
+      "tag": "Caster",
+      "category": "Craft Type",
+      "format": null
+    },
+    {
+      "tag_id": "279",
+      "tag": "Hit Power",
+      "category": "Craft Type",
+      "format": null
+    },
+    {
+      "tag_id": "280",
+      "tag": "Safety",
+      "category": "Craft Type",
+      "format": null
+    }
+  ],
+  "Gem Type": [
+    {
+      "tag_id": "272",
+      "tag": "Chipped",
+      "category": "Gem Type",
+      "format": null
+    },
+    {
+      "tag_id": "273",
+      "tag": "Flawed",
+      "category": "Gem Type",
+      "format": null
+    },
+    {
+      "tag_id": "275",
+      "tag": "Flawless",
+      "category": "Gem Type",
+      "format": null
+    },
+    {
+      "tag_id": "274",
+      "tag": "Normal",
+      "category": "Gem Type",
+      "format": null
+    },
+    {
+      "tag_id": "276",
+      "tag": "Perfect",
+      "category": "Gem Type",
+      "format": null
+    }
+  ],
+  "Tier": [
+    {
+      "tag_id": "184",
+      "tag": "Elite",
+      "category": "Tier",
+      "format": null
+    },
+    {
+      "tag_id": "167",
+      "tag": "Exceptional",
+      "category": "Tier",
+      "format": null
+    },
+    {
+      "tag_id": "146",
+      "tag": "Normal",
+      "category": "Tier",
+      "format": null
+    }
+  ]
+}

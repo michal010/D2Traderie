@@ -1,0 +1,250 @@
+﻿<Window x:Class="D2Traderie.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=DotNetProjects.Input.Toolkit"
+        xmlns:local="clr-namespace:D2Traderie"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="765" Width="1366" Background="#FF18191A">
+
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border>
+                            <Grid>
+                                <Grid>
+                                    <Border x:Name="border" 
+                                            CornerRadius="3,3,0,0"
+                                            Background="#242526"/>
+                                </Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="LightGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <DataTemplate x:Key="ListingTemplate">
+            <Grid Width="auto" Height="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Content="{Binding PriceGroups}" Foreground="White"/>
+
+                <ListBox Grid.Column="1" Height="200" HorizontalContentAlignment="Stretch" ItemsSource="{Binding NumericProperties}" ItemTemplate="{DynamicResource ListingNumberTemplate}" Background="{x:Null}" BorderBrush="{x:Null}">
+
+                </ListBox>
+                <TextBlock Grid.Column="1" Grid.Row="1">
+                    <Hyperlink NavigateUri="{Binding LisingURL}" RequestNavigate="Hyperlink_RequestNavigate">
+                        Listing Link
+                    </Hyperlink>
+                </TextBlock>
+                
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PropertyNumberTemplate">
+            <Grid>
+                <StackPanel Height="70" Focusable="False">
+                    <TextBlock Height="20" Margin="3,0,0,0" Width="auto" TextAlignment="Left" Text="{Binding Property}" Foreground="#FFD4CFAA"/>
+                    <StackPanel Orientation="Horizontal" Height="50">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Content="Min"/>
+                        <TextBox Width="50" Height="50" TextAlignment="Center" Text="{Binding Min}" SelectionBrush="{x:Null}" SelectionTextBrush="{x:Null}"/>
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Content="Max"/>
+                        <TextBox Width="50" Height="50" TextAlignment="Center" Text="{Binding Max}" SelectionBrush="{x:Null}" SelectionTextBrush="{x:Null}">
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ListingNumberTemplate">
+            <Grid Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{Binding Property, StringFormat=${0}:}" Foreground="White" FontSize="16"/>
+                <Label Grid.Column="1" Content="{Binding Number}" FontSize="16" Foreground="White"/>
+            </Grid>
+        </DataTemplate>
+
+
+        <local:PropertyTypeDataSelector x:Key="propertyTypeDataTemplateSelector"/>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel Margin="0,200,0,210">
+            <Label x:Name="label" Content="Label"/>
+        </StackPanel>
+        <TabControl x:Name="tabControl" Background="#FF18191A">
+            <TabItem Header="Listings" Foreground="White" Margin="20,0,-30,0" Width="80">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+                        <Label FontFamily="./Resources/Fonts/#Exocet" Content="Depth of search: " Foreground="White"/>
+                        <TextBox Height="30" Width="30" Background="White" Text="{Binding DepthOfSearch}" />
+                    </StackPanel>
+
+
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            
+                            <toolkit:AutoCompleteBox
+                            x:Name="SearchBar" SelectionChanged="OnItemNameSelectionChanged" Grid.Row="0" ItemsSource="{Binding ItemNames}" SelectedItem="{Binding Path=SelectedItemName, Mode=TwoWay}" Text="Item name..." Height="30" Width="300" Margin="20,20,20,20"/>
+                            <Button x:Name="searchButton" FontFamily="./Resources/Fonts/#Exocet" Click="OnSearchButtonClicked" Content="Search" Height="30" Width="80"/>
+                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1.618*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontFamily="./Resources/Fonts/#Exocet" FontSize="32.0" FontStyle="Normal" FontWeight="Regular" TextWrapping="WrapWithOverflow" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItemName}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20,20,20,20" Foreground="White" Height="143"/>
+                            <Image Grid.Row="0" Stretch="Uniform" Source="{Binding SelectedItemImageURL}"/>
+                            <ListBox Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=SelectedItemProperties}" ItemTemplate="{StaticResource PropertyNumberTemplate}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <ListBox.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                                </ListBox.Resources>
+                            </ListBox>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="0,-3,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" FontFamily="./Resources/Fonts/#Exocet" Grid.ColumnSpan="2" Content="Filter" FontSize="32" Foreground="#FFD4CFAA" FontStyle="Normal" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ComboBox SelectedItem="{Binding SelectedRuneValue}" ItemsSource="{Binding Runes}" Grid.Row="1" Margin="15,15,15,15" SelectedIndex="0"/>
+                            <ComboBox SelectedItem="{Binding SelectedFilterOption}" ItemsSource="{Binding FilterOptions}" Grid.Row="1" Grid.Column="1" Margin="15,15,15,15"/>
+                            <Button x:Name="filterButton" Click="OnFilterButtonClicked" Grid.Row="2" Grid.ColumnSpan="2" Margin="100,15,100,15" FontFamily="./Resources/Fonts/#Exocet" Content="Filter"/>
+                        </Grid>
+                    </Grid>
+
+                    <ListBox Grid.Row="1" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=SelectedListing}" ItemsSource="{Binding Path=Listings}" ItemTemplate="{DynamicResource ListingTemplate}" x:Name="listingsListBox"  Margin="20,10,20,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#FF242526" BorderBrush="#FFD4CFAA">
+
+                    </ListBox>
+                    <Label FontFamily="./Resources/Fonts/#Exocet" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Content="Listings" FontSize="38" Foreground="#FFD4CFAA" FontStyle="Normal" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                
+                
+            </TabItem>
+            <TabItem Header="Search Options" Foreground="White" Margin="40,0,-40,0" Height="20" Width="80">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="777*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,-5,12" Grid.ColumnSpan="2">
+                        <Border BorderThickness="1" Height="130" CornerRadius="3,3,3,3" Background="#FF242526" Margin="15,15,15,0">
+                            <StackPanel>
+                                <StackPanel Height="30" Width="737">
+                                    <Label x:Name="LabelSettings" Content="Filter Options" FontWeight="Normal" FontFamily="Arial" FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="GeneralLabel" Content="General" HorizontalAlignment="Center" Foreground="White"/>
+                                        <CheckBox x:Name="CheckBoxEtheral" Content="Etheral" Foreground="White" Margin="0,10,0,0" IsChecked="{Binding SearchSettings.Etheral}"/>
+                                        <CheckBox x:Name="CheckBoxLadder" Content="Ladder" Foreground="White" IsChecked="{Binding SearchSettings.Ladder}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100" d:LayoutOverrides="Width" Margin="0,0,0,0">
+                                        <Label x:Name="ModeLabel" Content="Mode" HorizontalAlignment="Center" Foreground="White"/>
+                                        <RadioButton x:Name="RBSoftcore" Content="Softcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.Softcore}"/>
+                                        <RadioButton x:Name="RBSoftcore_Copy" Content="Hardcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="White" IsChecked="{Binding SearchSettings.Hardcore}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="RegionLabel" Content="Region" HorizontalAlignment="Center" Foreground="White"/>
+                                        <CheckBox x:Name="CheckBoxAsia" Content="Asia" Foreground="White" HorizontalAlignment="Left" Margin="0,10,0,0" IsChecked="{Binding SearchSettings.Asia}"/>
+                                        <CheckBox x:Name="CheckBoxAmerica" Content="America" Foreground="White" IsChecked="{Binding SearchSettings.America}"/>
+                                        <CheckBox x:Name="CheckBoxEurope" Content="Europe" Foreground="White" IsChecked="{Binding SearchSettings.Europe}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="IndentifiedLabel" Content="Identified" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
+                                        <RadioButton x:Name="RBIdentifiedAll" Content="All" GroupName="Identify" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllIdentified}"/>
+                                        <RadioButton x:Name="RBIdentified" Content="Identified" GroupName="Identify" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Identified}"/>
+                                        <RadioButton x:Name="RBUnidentified" Content="Unidentified" GroupName="Identify" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Unidentified}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="MakeOffersLabel" Content="MakeOffers" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
+                                        <RadioButton x:Name="RBOffersAll" Content="All" GroupName="Makeoffers" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllOffers}"/>
+                                        <RadioButton x:Name="RBOffersOnly" Content="Make offers" GroupName="Makeoffers" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.MakeOffers}"/>
+                                        <RadioButton x:Name="RBDefinedOffers" Content="Defined offers" GroupName="Makeoffers" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.DefinedOffers}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="UpgradedLabel" Content="Upgraded" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
+                                        <RadioButton x:Name="RBUpgradedAll" Content="All" GroupName="Upgraded" HorizontalAlignment="Left" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllUpgraded}"/>
+                                        <RadioButton x:Name="RBUpgradedOnly" Content="Upgraded only" GroupName="Upgraded" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.OnlyUpgraded}"/>
+                                        <RadioButton x:Name="RBNotUpgraded" Content="Not upgraded" GroupName="Upgraded" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.NotUpgraded}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
+                                        <Label x:Name="PlatformLabel" Content="Platform" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
+                                        <RadioButton x:Name="RBPC" Content="PC" GroupName="Platform" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.PC}"/>
+                                        <RadioButton x:Name="RBSwitch" Content="Switch" GroupName="Platform" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Switch}"/>
+                                        <RadioButton x:Name="RBPlaystation" Content="Playstation" GroupName="Platform" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Playstation}"/>
+                                        <RadioButton x:Name="RBXbox" Content="xBox" GroupName="Platform" Foreground="White" IsChecked="{Binding SearchSettings.xBox}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Label x:Name="label1" Content="Settings changes not implemented yet!" FontSize="20" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
