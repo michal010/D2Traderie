@@ -18,15 +18,15 @@ namespace D2Traderie.Project.Models
         [JsonProperty("group")]
         public int Group { get; set; } //grupa oferty tj. np um + mal będą w jednej grupie, or Ber, np. będzie w grupie innej
         [JsonProperty("item_id")]
-        public uint ItemID { get; set; }
+        public ulong ItemID { get; set; }
         [JsonProperty("quantity")]
         public uint Quantity { get; set; }
         [JsonProperty("listing_id")]
-        public uint ListingID { get; set; }
+        public ulong ListingID { get; set; }
         //[JsonProperty("properties")]
         //public PropertiesEntity { get; set; }
         [JsonProperty("variant_id")]
-        public uint? VariantID{ get; set; }
+        public ulong? VariantID { get; set; }
         [JsonProperty("variant_image")]
         public string? VariantImage{ get; set; }
         [JsonProperty("variant_name")]

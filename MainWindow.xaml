@@ -8,8 +8,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="765" Width="1366" Background="#FF18191A">
 
-
     <Window.Resources>
+
+        <!-- Styl dla unidentified -->
+        <Style x:Key="UnidentifiedStyle" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NumericProperties}" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Styl TabItem -->
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -17,172 +28,317 @@
                         <Border>
                             <Grid>
                                 <Grid>
-                                    <Border x:Name="border" 
+                                    <Border x:Name="border"
                                             CornerRadius="3,3,0,0"
                                             Background="#242526"/>
                                 </Grid>
                                 <ContentPresenter ContentSource="Header"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="LightGray" />
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
                             </Trigger>
-                            <Trigger Property="IsSelected"
-                                     Value="True">
-                                <Setter TargetName="border"
-                                        Property="Background"
-                                        Value="LightGray" />
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <!-- Template listingu -->
         <DataTemplate x:Key="ListingTemplate">
-            <Grid Width="auto" Height="300">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="5*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+            <Border BorderBrush="#FFD4CFAA" BorderThickness="0,0,0,1" Margin="0,0,0,5" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="0" Content="{Binding PriceGroups}" Foreground="White"/>
+                    <!-- Cena -->
+                    <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                        <TextBlock Text="CENA" Foreground="#FFD4CFAA"
+                                   FontFamily="./Resources/Fonts/#Exocet"
+                                   FontSize="12" Margin="0,0,0,5"/>
+                        <TextBlock Text="{Binding PriceGroups}" Foreground="White"
+                                   TextWrapping="Wrap" FontSize="13"/>
+                    </StackPanel>
 
-                <ListBox Grid.Column="1" Height="200" HorizontalContentAlignment="Stretch" ItemsSource="{Binding NumericProperties}" ItemTemplate="{DynamicResource ListingNumberTemplate}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <!-- Właściwości -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                        <TextBlock Text="WŁAŚCIWOŚCI" Foreground="#FFD4CFAA"
+                                   FontFamily="./Resources/Fonts/#Exocet"
+                                   FontSize="12" Margin="0,0,0,5"/>
+                        <TextBlock Text="⚠ UNIDENTIFIED"
+                                   Style="{StaticResource UnidentifiedStyle}"
+                                   Foreground="#FFFF6B35"
+                                   FontFamily="./Resources/Fonts/#Exocet"
+                                   FontSize="14"
+                                   Margin="0,2,0,2"/>
+                        <ItemsControl ItemsSource="{Binding NumericProperties}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="0,2,0,2"
+                                               Text="{Binding DisplayValue}"
+                                               Foreground="#FFD4CFAA" FontSize="13"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
 
-                </ListBox>
-                <TextBlock Grid.Column="1" Grid.Row="1">
-                    <Hyperlink NavigateUri="{Binding LisingURL}" RequestNavigate="Hyperlink_RequestNavigate">
-                        Listing Link
-                    </Hyperlink>
-                </TextBlock>
-                
-            </Grid>
+                    <!-- Link -->
+                    <TextBlock Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,0,0,0">
+                        <Hyperlink NavigateUri="{Binding LisingURL}" RequestNavigate="Hyperlink_RequestNavigate">
+                            🔗 Link
+                        </Hyperlink>
+                    </TextBlock>
+                </Grid>
+            </Border>
         </DataTemplate>
 
+        <!-- Template właściwości itemu (panel prawy) -->
         <DataTemplate x:Key="PropertyNumberTemplate">
-            <Grid>
-                <StackPanel Height="70" Focusable="False">
-                    <TextBlock Height="20" Margin="3,0,0,0" Width="auto" TextAlignment="Left" Text="{Binding Property}" Foreground="#FFD4CFAA"/>
-                    <StackPanel Orientation="Horizontal" Height="50">
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Content="Min"/>
-                        <TextBox Width="50" Height="50" TextAlignment="Center" Text="{Binding Min}" SelectionBrush="{x:Null}" SelectionTextBrush="{x:Null}"/>
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="50" Content="Max"/>
-                        <TextBox Width="50" Height="50" TextAlignment="Center" Text="{Binding Max}" SelectionBrush="{x:Null}" SelectionTextBrush="{x:Null}">
-                        </TextBox>
-                    </StackPanel>
-                </StackPanel>
+            <Border Padding="3,8,3,8" BorderBrush="#33D4CFAA" BorderThickness="0,0,0,1">
+                <StackPanel>
+                    <TextBlock Text="{Binding DisplayName}"
+                               Foreground="#FFD4CFAA"
+                               FontSize="13"
+                               Margin="0,0,0,5"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-            </Grid>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Min" Foreground="#88D4CFAA"
+                                       FontSize="10" HorizontalAlignment="Center"/>
+                            <TextBox TextAlignment="Center"
+                                     Text="{Binding Min, TargetNullValue=''}"
+                                     Background="#FF18191A"
+                                     Foreground="White"
+                                     BorderBrush="#FFD4CFAA"
+                                     Height="28"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="1" Text="—"
+                                   Foreground="#FFD4CFAA"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,0"/>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Max" Foreground="#88D4CFAA"
+                                       FontSize="10" HorizontalAlignment="Center"/>
+                            <TextBox TextAlignment="Center"
+                                     Text="{Binding Max, TargetNullValue=''}"
+                                     Background="#FF18191A"
+                                     Foreground="White"
+                                     BorderBrush="#FFD4CFAA"
+                                     Height="28"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="ListingNumberTemplate">
             <Grid Width="Auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="{Binding Property, StringFormat=${0}:}" Foreground="White" FontSize="16"/>
+                <Label Grid.Column="0" Content="{Binding DisplayName, StringFormat=${0}:}" Foreground="White" FontSize="16"/>
                 <Label Grid.Column="1" Content="{Binding Number}" FontSize="16" Foreground="White"/>
             </Grid>
         </DataTemplate>
 
-
         <local:PropertyTypeDataSelector x:Key="propertyTypeDataTemplateSelector"/>
+
     </Window.Resources>
 
     <Grid>
-        <StackPanel Margin="0,200,0,210">
-            <Label x:Name="label" Content="Label"/>
-        </StackPanel>
         <TabControl x:Name="tabControl" Background="#FF18191A">
+
+            <!-- ==================== ZAKŁADKA LISTINGS ==================== -->
             <TabItem Header="Listings" Foreground="White" Margin="20,0,-30,0" Width="80">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="8*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
-                        <Label FontFamily="./Resources/Fonts/#Exocet" Content="Depth of search: " Foreground="White"/>
-                        <TextBox Height="30" Width="30" Background="White" Text="{Binding DepthOfSearch}" />
-                    </StackPanel>
-
-
-                    <Grid Grid.Row="1" Grid.Column="1">
+                    <!-- LEWA: tytuł + lista listingów + depth -->
+                    <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="4*"/>
-                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="45"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            
-                            <toolkit:AutoCompleteBox
-                            x:Name="SearchBar" SelectionChanged="OnItemNameSelectionChanged" Grid.Row="0" ItemsSource="{Binding ItemNames}" SelectedItem="{Binding Path=SelectedItemName, Mode=TwoWay}" Text="Item name..." Height="30" Width="300" Margin="20,20,20,20"/>
-                            <Button x:Name="searchButton" FontFamily="./Resources/Fonts/#Exocet" Click="OnSearchButtonClicked" Content="Search" Height="30" Width="80"/>
+
+                        <Label Grid.Row="0"
+                               FontFamily="./Resources/Fonts/#Exocet"
+                               Content="Listings" FontSize="32"
+                               Foreground="#FFD4CFAA"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                        <ListBox Grid.Row="1"
+                                 HorizontalContentAlignment="Stretch"
+                                 SelectedItem="{Binding Path=SelectedListing}"
+                                 ItemsSource="{Binding Path=Listings}"
+                                 ItemTemplate="{DynamicResource ListingTemplate}"
+                                 x:Name="listingsListBox"
+                                 Margin="10,0,10,0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                 Background="#FF242526"
+                                 BorderBrush="#FFD4CFAA"/>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal"
+                                    VerticalAlignment="Center" Margin="10,0,0,0">
+                            <Label FontFamily="./Resources/Fonts/#Exocet"
+                                   Content="Depth of search: " Foreground="White"/>
+                            <TextBox Height="28" Width="40"
+                                     Background="#FF242526"
+                                     Foreground="White"
+                                     BorderBrush="#FFD4CFAA"
+                                     VerticalContentAlignment="Center"
+                                     TextAlignment="Center"
+                                     Text="{Binding DepthOfSearch}"/>
                         </StackPanel>
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1.618*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock FontFamily="./Resources/Fonts/#Exocet" FontSize="32.0" FontStyle="Normal" FontWeight="Regular" TextWrapping="WrapWithOverflow" Grid.Row="0" Grid.Column="1" Text="{Binding SelectedItemName}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20,20,20,20" Foreground="White" Height="143"/>
-                            <Image Grid.Row="0" Stretch="Uniform" Source="{Binding SelectedItemImageURL}"/>
-                            <ListBox Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Path=SelectedItemProperties}" ItemTemplate="{StaticResource PropertyNumberTemplate}" Background="{x:Null}" BorderBrush="{x:Null}">
-                                <ListBox.Resources>
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
-                                </ListBox.Resources>
-                            </ListBox>
-                        </Grid>
-                        <Grid Grid.Row="2" Margin="0,-3,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" FontFamily="./Resources/Fonts/#Exocet" Grid.ColumnSpan="2" Content="Filter" FontSize="32" Foreground="#FFD4CFAA" FontStyle="Normal" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <ComboBox SelectedItem="{Binding SelectedRuneValue}" ItemsSource="{Binding Runes}" Grid.Row="1" Margin="15,15,15,15" SelectedIndex="0"/>
-                            <ComboBox SelectedItem="{Binding SelectedFilterOption}" ItemsSource="{Binding FilterOptions}" Grid.Row="1" Grid.Column="1" Margin="15,15,15,15"/>
-                            <Button x:Name="filterButton" Click="OnFilterButtonClicked" Grid.Row="2" Grid.ColumnSpan="2" Margin="100,15,100,15" FontFamily="./Resources/Fonts/#Exocet" Content="Filter"/>
-                        </Grid>
                     </Grid>
 
-                    <ListBox Grid.Row="1" HorizontalContentAlignment="Stretch" SelectedItem="{Binding Path=SelectedListing}" ItemsSource="{Binding Path=Listings}" ItemTemplate="{DynamicResource ListingTemplate}" x:Name="listingsListBox"  Margin="20,10,20,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#FF242526" BorderBrush="#FFD4CFAA">
+                    <!-- PRAWA: search + podgląd + właściwości + filter + sort -->
+                    <Grid Grid.Column="1" Background="#FF1A1B1C">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    </ListBox>
-                    <Label FontFamily="./Resources/Fonts/#Exocet" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Content="Listings" FontSize="38" Foreground="#FFD4CFAA" FontStyle="Normal" FontWeight="Normal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <!-- Search bar -->
+                        <Border Grid.Row="0" BorderBrush="#FFD4CFAA" BorderThickness="0,0,0,1" Padding="10,0,10,0">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <toolkit:AutoCompleteBox
+                                    x:Name="SearchBar"
+                                    SelectionChanged="OnItemNameSelectionChanged"
+                                    ItemsSource="{Binding ItemNames}"
+                                    SelectedItem="{Binding Path=SelectedItemName, Mode=TwoWay}"
+                                    Text="Item name..."
+                                    Height="32"
+                                    Margin="0,0,10,0"/>
+                                <Button x:Name="searchButton"
+                                        FontFamily="./Resources/Fonts/#Exocet"
+                                        Click="OnSearchButtonClicked"
+                                        Content="Search"
+                                        Height="32" Width="80"
+                                        Background="#FF242526"
+                                        Foreground="White"
+                                        BorderBrush="#FFD4CFAA"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Podgląd itemu: obrazek + nazwa -->
+                        <Border Grid.Row="1" BorderBrush="#FFD4CFAA" BorderThickness="0,0,0,1" Padding="10">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="80" Height="80" Stretch="Uniform"
+                                       Source="{Binding SelectedItemImageURL}"
+                                       Margin="0,0,15,0"/>
+                                <TextBlock FontFamily="./Resources/Fonts/#Exocet"
+                                           FontSize="24"
+                                           Text="{Binding SelectedItemName}"
+                                           Foreground="White"
+                                           VerticalAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Właściwości itemu (min/max filtry) -->
+                        <ListBox Grid.Row="2"
+                                 ItemsSource="{Binding Path=SelectedItemProperties}"
+                                 ItemTemplate="{StaticResource PropertyNumberTemplate}"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 Margin="5"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
+                            </ListBox.Resources>
+                        </ListBox>
+
+                        <!-- Filter + Sort + przycisk -->
+                        <Border Grid.Row="3" BorderBrush="#FFD4CFAA" BorderThickness="0,1,0,0" Padding="10">
+                            <StackPanel>
+
+                                <!-- Filter: runa + opcja -->
+                                <Label FontFamily="./Resources/Fonts/#Exocet"
+                                       Content="Filter" FontSize="20"
+                                       Foreground="#FFD4CFAA"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0"
+                                              SelectedItem="{Binding SelectedRuneValue}"
+                                              ItemsSource="{Binding Runes}"
+                                              Margin="0,0,5,0"
+                                              SelectedIndex="0"/>
+                                    <ComboBox Grid.Column="1"
+                                              SelectedItem="{Binding SelectedFilterOption}"
+                                              ItemsSource="{Binding FilterOptions}"
+                                              Margin="5,0,0,0"/>
+                                </Grid>
+
+                                <!-- Sort: opcja + właściwość -->
+                                <Label FontFamily="./Resources/Fonts/#Exocet"
+                                       Content="Sort" FontSize="20"
+                                       Foreground="#FFD4CFAA"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ComboBox Grid.Column="0"
+                                              SelectedItem="{Binding SelectedSortOption}"
+                                              ItemsSource="{Binding SortOptions}"
+                                              Margin="0,0,5,0"/>
+                                    <ComboBox Grid.Column="1"
+                                              SelectedItem="{Binding SelectedSortProperty}"
+                                              ItemsSource="{Binding SelectedItemPropertyNames}"
+                                              Margin="5,0,0,0"/>
+                                </Grid>
+
+                                <!-- Przycisk Filter -->
+                                <Button x:Name="filterButton"
+                                        Click="OnFilterButtonClicked"
+                                        Height="35"
+                                        FontFamily="./Resources/Fonts/#Exocet"
+                                        Content="Filter"
+                                        Background="#FF242526"
+                                        Foreground="White"
+                                        BorderBrush="#FFD4CFAA"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </Grid>
-                
-                
             </TabItem>
+
+            <!-- ==================== ZAKŁADKA SEARCH OPTIONS ==================== -->
             <TabItem Header="Search Options" Foreground="White" Margin="40,0,-40,0" Height="20" Width="80">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -190,10 +346,13 @@
                         <ColumnDefinition Width="777*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="0,0,-5,12" Grid.ColumnSpan="2">
-                        <Border BorderThickness="1" Height="130" CornerRadius="3,3,3,3" Background="#FF242526" Margin="15,15,15,0">
+                        <Border BorderThickness="1" Height="130" CornerRadius="3,3,3,3"
+                                Background="#FF242526" Margin="15,15,15,0">
                             <StackPanel>
                                 <StackPanel Height="30" Width="737">
-                                    <Label x:Name="LabelSettings" Content="Filter Options" FontWeight="Normal" FontFamily="Arial" FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+                                    <Label x:Name="LabelSettings" Content="Filter Options"
+                                           FontWeight="Normal" FontFamily="Arial" FontSize="16"
+                                           Foreground="White" HorizontalAlignment="Center"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel Orientation="Vertical" Width="100" Height="100">
@@ -201,10 +360,10 @@
                                         <CheckBox x:Name="CheckBoxEtheral" Content="Etheral" Foreground="White" Margin="0,10,0,0" IsChecked="{Binding SearchSettings.Etheral}"/>
                                         <CheckBox x:Name="CheckBoxLadder" Content="Ladder" Foreground="White" IsChecked="{Binding SearchSettings.Ladder}"/>
                                     </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100" d:LayoutOverrides="Width" Margin="0,0,0,0">
+                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
                                         <Label x:Name="ModeLabel" Content="Mode" HorizontalAlignment="Center" Foreground="White"/>
                                         <RadioButton x:Name="RBSoftcore" Content="Softcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.Softcore}"/>
-                                        <RadioButton x:Name="RBSoftcore_Copy" Content="Hardcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="White" IsChecked="{Binding SearchSettings.Hardcore}"/>
+                                        <RadioButton x:Name="RBSoftcore_Copy" Content="Hardcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" IsChecked="{Binding SearchSettings.Hardcore}"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Vertical" Width="100" Height="100">
                                         <Label x:Name="RegionLabel" Content="Region" HorizontalAlignment="Center" Foreground="White"/>
@@ -240,11 +399,48 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <Label x:Name="label1" Content="Settings changes not implemented yet!" FontSize="20" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
+                        <Label x:Name="label1" Content="Settings changes not implemented yet!"
+                               FontSize="20" Foreground="Red"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <Button x:Name="refreshDbButton"
+                                Content="Refresh DB"
+                                Click="OnRefreshDbClicked"
+                                Height="40" Width="200"
+                                FontFamily="./Resources/Fonts/#Exocet"
+                                Foreground="White"
+                                Background="#FF242526"
+                                BorderBrush="#FFD4CFAA"
+                                Margin="0,20,0,0"
+                                HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
+
         </TabControl>
+
+        <!-- Loading overlay -->
+        <Grid x:Name="loadingOverlay" Visibility="Collapsed" Background="#AA000000">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Pobieranie danych..."
+                       FontFamily="./Resources/Fonts/#Exocet"
+                       Foreground="#FFD4CFAA" FontSize="24"
+                       HorizontalAlignment="Center"/>
+                <ProgressBar x:Name="progressBar"
+                             IsIndeterminate="True"
+                             Height="20" Width="400"
+                             Foreground="#FFD4CFAA"
+                             Background="#FF242526"
+                             BorderBrush="#FFD4CFAA"
+                             Margin="0,10,0,0"/>
+                <Label x:Name="loadingStatusLabel"
+                       Content=""
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="0,5,0,0"/>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Window>

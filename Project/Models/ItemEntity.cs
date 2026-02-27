@@ -10,7 +10,7 @@ namespace D2Traderie.Project.Models
     class ItemEntity
     {
         [JsonProperty("id")]
-        public uint Id { get; set; }
+        public ulong Id { get; set; }
         [JsonProperty("type")]
         public string Type { get; set; }
         [JsonProperty("buy_price")]

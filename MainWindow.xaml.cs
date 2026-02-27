@@ -24,6 +24,14 @@ using System.Windows.Shapes;
 
 namespace D2Traderie
 {
+    // Nowa klasa filtra - tylko do UI
+    public class PropertyFilter
+    {
+        public string Property { get; set; }
+        public string DisplayName => Property?.Replace("{{value}}", "#") ?? "";
+        public uint? Min { get; set; } = null;
+        public uint? Max { get; set; } = null;
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -175,6 +183,36 @@ namespace D2Traderie
             }
         }
 
+        private List<SortOption> _sortOptions;
+        public List<SortOption> SortOptions
+        {
+            get { return _sortOptions; }
+            set { _sortOptions = value; OnPropertyChanged(); }
+        }
+
+        private SortOption _selectedSortOption;
+        public SortOption SelectedSortOption
+        {
+            get { return _selectedSortOption; }
+            set { _selectedSortOption = value; OnPropertyChanged(); }
+        }
+
+        private string _selectedSortProperty;
+        public string SelectedSortProperty
+        {
+            get { return _selectedSortProperty; }
+            set { _selectedSortProperty = value; OnPropertyChanged(); }
+        }
+        public List<string> SelectedItemPropertyNames
+        {
+            get
+            {
+                return SelectedItemProperties?
+                    .Select(p => p.Property)
+                    .ToList() ?? new List<string>();
+            }
+        }
+
         Services services;
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -189,6 +227,15 @@ namespace D2Traderie
         {
             DataContext = this;
             FilterOptions = new List<FilterOption>() { FilterOption.Null, FilterOption.Lower, FilterOption.LowerOrEqual, FilterOption.Equal, FilterOption.Higher, FilterOption.HigherOrEqual };
+            SortOptions = new List<SortOption>
+            {
+                SortOption.None,
+                SortOption.PriceAscending,
+                SortOption.PriceDescending,
+                SortOption.PropertyAscending,
+                SortOption.PropertyDescending
+            };
+
             Runes = RunesValue.Runes;
             DepthOfSearch = 1;
             services = new Services(this);
@@ -200,24 +247,43 @@ namespace D2Traderie
         private async void OnSearchButtonClicked(object sender, RoutedEventArgs e)
         {
             searchButton.IsEnabled = false;
-            //services.Database.DownloadAndSaveItems();
-            uint itemID = services.Database.GetItemID(SelectedItemName);
+            ShowLoading("Pobieranie listingów...");
+            ulong itemID = services.Database.GetItemID(SelectedItemName);
             await services.Database.DownloadListings(itemID, DepthOfSearch);
-            //process request 
-            //send
+            HideLoading();
             searchButton.IsEnabled = true;
         }
 
+        private async void OnRefreshDbClicked(object sender, RoutedEventArgs e)
+        {
+            refreshDbButton.IsEnabled = false;
+            ShowLoading("Pobieranie bazy itemów...");
+            await services.Database.RefreshDatabase();
+            HideLoading();
+            refreshDbButton.IsEnabled = true;
+        }
         private void RefreshSelectedItemUI()
         {
-            if (SelectedItemName == null)
-                return;
-            uint itemID = services.Database.GetItemID(SelectedItemName);
+            if (SelectedItemName == null) return;
+            ulong itemID = services.Database.GetItemID(SelectedItemName);
             var item = services.Database.GetItem(itemID);
-            SelectedItemProperties = services.Database.GetItemPropertyNumericEntities(item);
-            SelectedItemImageURL = services.Database.GetItemImage(item);
-        }
 
+            // Twórz puste filtry - tylko nazwy właściwości, Min/Max = null
+            SelectedItemProperties = services.Database
+                .GetItemPropertyNumericEntities(item)
+                .Select(p => new ItemPropertyEntity
+                {
+                    Property = p.Property,
+                    PropertyId = p.PropertyId,
+                    Type = p.Type,
+                    Min = null,  // zawsze null - użytkownik wpisuje sam
+                    Max = null   // zawsze null
+                })
+                .ToList();
+
+            SelectedItemImageURL = services.Database.GetItemImage(item);
+            OnPropertyChanged(nameof(SelectedItemPropertyNames));
+        }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -230,12 +296,52 @@ namespace D2Traderie
 
         private void OnFilterButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (services.Database.Listings == null || services.Database.Listings.Count < 0)
+            if (services.Database.Listings == null || services.Database.Listings.Count <= 0)
                 return;
+
             ulong value = 0;
-            if(SelectedRuneValue != null)
+            if (SelectedRuneValue != null && RunesValue.RuneValues.ContainsKey(SelectedRuneValue))
                 value = RunesValue.RuneValues[SelectedRuneValue];
-            Listings = services.FilterService.GetFilteredListings(services.Database.Listings, SelectedItemProperties, SelectedFilterOption, value);
+
+            Console.WriteLine($"=== FILTER DEBUG ===");
+            Console.WriteLine($"Listings w DB: {services.Database.Listings.Count}");
+            Console.WriteLine($"FilterOption: {SelectedFilterOption}, RuneValue: {value}");
+            Console.WriteLine($"SelectedItemProperties count: {SelectedItemProperties?.Count}");
+            if (SelectedItemProperties != null)
+                foreach (var p in SelectedItemProperties)
+                    Console.WriteLine($"  Property: {p.Property}, Min: {p.Min}, Max: {p.Max}");
+
+            // najpierw tylko filtr ceny
+            var afterPriceFilter = services.FilterService.GetFilteredListings(
+                services.Database.Listings, null, SelectedFilterOption, value);
+            Console.WriteLine($"Po filtrze CENY (bez property): {afterPriceFilter.Count}");
+
+            // potem z property
+            var filtered = services.FilterService.GetFilteredListings(
+                services.Database.Listings, SelectedItemProperties, SelectedFilterOption, value);
+            Console.WriteLine($"Po filtrze WSZYSTKIM: {filtered.Count}");
+
+            string sortProp = (SelectedSortOption == SortOption.PropertyAscending ||
+                               SelectedSortOption == SortOption.PropertyDescending)
+                               ? SelectedSortProperty : null;
+
+            Listings = services.FilterService.GetSortedListings(filtered, SelectedSortOption, sortProp);
+            Console.WriteLine($"Listings w UI po sortowaniu: {Listings.Count}");
+        }
+        public void ShowLoading(string message = "Pobieranie danych...")
+        {
+            loadingOverlay.Visibility = Visibility.Visible;
+            loadingStatusLabel.Content = message;
+        }
+
+        public void HideLoading()
+        {
+            loadingOverlay.Visibility = Visibility.Collapsed;
+        }
+
+        public void UpdateLoadingMessage(string message)
+        {
+            loadingStatusLabel.Content = message;
         }
     }
 }

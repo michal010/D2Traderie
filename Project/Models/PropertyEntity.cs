@@ -24,7 +24,7 @@ namespace D2Traderie.Project.Models
         };
 
         [JsonProperty("id")]
-        public uint Id { get; set; }
+        public ulong Id { get; set; }
         [JsonProperty("img")]
         public string? Img { get; set; }
         [JsonProperty("bool")]
@@ -37,6 +37,8 @@ namespace D2Traderie.Project.Models
         //public OptionsEntity? Options { get; set; }
         [JsonProperty("property")]
         public string? Property { get; set; }
+        [JsonIgnore]
+        public string DisplayValue => Property?.Replace("{{value}}", Number?.ToString() ?? "#") ?? "";
 
         public PropertyType GetPropertyType()
         {

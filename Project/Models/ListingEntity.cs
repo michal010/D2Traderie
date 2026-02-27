@@ -12,7 +12,7 @@ namespace D2Traderie.Project.Models
     public class ListingEntity
     {
         [JsonProperty("id")]
-        public uint Id { get; set; }
+        public ulong Id { get; set; }
         [JsonProperty("seller_id")]
         public string SellerID{ get; set; }
         [JsonProperty("amount")]
@@ -22,9 +22,9 @@ namespace D2Traderie.Project.Models
         [JsonProperty("active")]
         public bool? Active{ get; set; }
         [JsonProperty("item_id")]
-        public uint ItemID { get; set; }
+        public ulong ItemID { get; set; }
         [JsonProperty("variant_id")]
-        public uint? VariantID { get; set; }
+        public ulong? VariantID { get; set; }
         [JsonProperty("selling")]
         public bool? Selling{ get; set; }
         [JsonProperty("make_offer")]
@@ -54,23 +54,20 @@ namespace D2Traderie.Project.Models
         public string PriceGroups { get; set; }
 
         [JsonIgnore()]
-        public string LisingURL
-        {
-            get
-            {
-                return String.Format("https://traderie.com/diablo2resurrected/listing/" + Id);
-            }
-        }
+        public string LisingURL => $"https://traderie.com/diablo2resurrected/listing/{Id}";
 
         [JsonIgnore()]
-        public List<PropertyEntity> NumericProperties 
-        { 
+        public List<PropertyEntity> NumericProperties
+        {
             get
             {
                 if (Properties == null || Properties.Count < 1)
                     return null;
 
-                return Properties.Where(p => p.Type == "number").ToList();
+                var numeric = Properties.Where(p => p.Type == "number").ToList();
+
+                // DODAJ: zwróć null jeśli lista jest pusta
+                return numeric.Count > 0 ? numeric : null;
             }
         }
 
@@ -80,6 +77,7 @@ namespace D2Traderie.Project.Models
             if (Prices == null || Prices.Count < 1)
             {
                 PriceGroups = "Make offers";
+                return;
             }
 
             StringBuilder sb = new StringBuilder();
@@ -110,20 +108,18 @@ namespace D2Traderie.Project.Models
         public List<ulong> GetPriceValues()
         {
             List<ulong> result = new List<ulong>();
-            for (int i = 0; i < Prices.Count; i++)
+            for (int i = 0; ; i++)
             {
-                ulong value = ulong.MaxValue;
                 var prices = GetPriceGroup(i);
+                if (prices == null || prices.Count == 0) break;
+
+                ulong value = 0;  // było ulong.MaxValue — powodowało overflow!
                 foreach (var p in prices)
                 {
-                    if(RunesValue.RuneValues.ContainsKey(p.Name))
-                    {
-                        ulong RuneValue = RunesValue.RuneValues[p.Name];
-                        value += RuneValue * p.Quantity;
-                    }
+                    if (RunesValue.RuneValues.ContainsKey(p.Name))
+                        value += RunesValue.RuneValues[p.Name] * p.Quantity;
                 }
-                if(value != ulong.MaxValue)
-                    result.Add(value);
+                result.Add(value);
             }
             return result;
         }

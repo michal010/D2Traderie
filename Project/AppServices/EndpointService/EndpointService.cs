@@ -33,7 +33,7 @@ namespace D2Traderie.Project.AppServices
             return itemsEndpointDecorator.GetEndpointURL();
         }
 
-        public string GetListingEndpoint(uint itemID, int page)
+        public string GetListingEndpoint(ulong itemID, int page)
         {
             IEndpoint baseEndpoint = new Endpoint();
             IEndpoint listingEndpoint = new EndpointListingsDecorator(baseEndpoint);

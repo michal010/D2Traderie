@@ -42,11 +42,24 @@ namespace D2Traderie.Project.Models
             else
                 LoadObjectFromJsonFile<List<ItemEntity>>(out Items, Settings.ItemsFileDataFullName);
 
+            // DODAJ:
+            if (!services.FileService.FileExist(Settings.ItemTagsDataFullName))
+                await DonwloadAndSaveItemTags();
+            else
+                LoadObjectFromJsonFile<ItemTags>(out ItemTags, Settings.ItemTagsDataFullName);
+
             services.MainWindow.ItemNames = GetItemNames();
-            //LoadObjectFromJsonFile<ItemTags>(out ItemTags, Settings.ItemTagsDataFullName);
+        }
+        public async Task RefreshDatabase()
+        {
+            Items = new List<ItemEntity>();
+            await DownloadAndSaveItems();
+            await DonwloadAndSaveItemTags();
+            services.MainWindow.ItemNames = GetItemNames();
         }
 
-        public async Task DownloadListings(uint itemID, uint DepthOfSearch) //additional options to be passed.
+
+        public async Task DownloadListings(ulong itemID, uint DepthOfSearch) //additional options to be passed.
         {
             uint maxPages = DepthOfSearch;
             int pageIndex = 0;
@@ -62,7 +75,10 @@ namespace D2Traderie.Project.Models
                 PagedListingEntity pagedListings = new PagedListingEntity();
                 pagedListings = JsonConvert.DeserializeObject<PagedListingEntity>(json);
                 if (pagedListings != null && pagedListings.pagedListings.Count > 0)
+                {
                     Listings.AddRange(pagedListings.pagedListings);
+                    services.MainWindow.UpdateLoadingMessage($"Pobrano {Listings.Count} listingów (strona {pageIndex})...");
+                }
                 else
                     break;
                 pageIndex++;
@@ -75,36 +91,45 @@ namespace D2Traderie.Project.Models
 
         public async Task DownloadAndSaveItems()
         {
-            //jakies zabezpieczenie przed spamem.
             int pageIndex = 0;
             string json = string.Empty;
             string endpointURL = string.Empty;
             HttpResponseMessage response;
-            while(true)
+            while (true)
             {
                 endpointURL = services.EndpointService.GetItemsEndpoint(pageIndex);
+                Console.WriteLine($"Fetching: {endpointURL}"); // <- dodaj
                 response = await services.HttpSerivce.Get(endpointURL);
+                Console.WriteLine($"Status: {response.StatusCode}"); // <- dodaj
                 json = await response.Content.ReadAsStringAsync();
-                PagedItemsEntity pagedItems = new PagedItemsEntity();
-                pagedItems = JsonConvert.DeserializeObject<PagedItemsEntity>(json);
+                Console.WriteLine($"Response length: {json.Length}, preview: {json.Substring(0, Math.Min(200, json.Length))}"); // <- dodaj
+                PagedItemsEntity pagedItems = JsonConvert.DeserializeObject<PagedItemsEntity>(json);
                 if (pagedItems != null && pagedItems.pagedItems.Count > 0)
+                {
+                    Console.WriteLine($"Page {pageIndex}: got {pagedItems.pagedItems.Count} items"); // <- dodaj
                     Items.AddRange(pagedItems.pagedItems);
+                    services.MainWindow.UpdateLoadingMessage($"Pobrano {Items.Count} itemów...");
+                }
                 else
+                {
+                    Console.WriteLine($"No more items at page {pageIndex}, stopping."); // <- dodaj
                     break;
+                }
                 pageIndex++;
             }
+            Console.WriteLine($"Total items downloaded: {Items.Count}"); // <- dodaj
             await ConvertAndSaveDataAsJson<List<ItemEntity>>(Items, Settings.ItemsFileDataFullName);
         }
 
-        public async void DonwloadAndSaveItemTags()
+        public async Task DonwloadAndSaveItemTags()
         {
+            services.MainWindow.UpdateLoadingMessage("Pobieranie tagów...");
             string json = string.Empty;
             string endpointURL = services.EndpointService.GetTagsEndpoint();
             HttpResponseMessage response = await services.HttpSerivce.Get(endpointURL);
             json = await response.Content.ReadAsStringAsync();
 
             ItemTagsRootObject root = JsonConvert.DeserializeObject<ItemTagsRootObject>(json);
-
             ItemTags = root.Tags;
 
             await ConvertAndSaveDataAsJson<ItemTags>(ItemTags, Settings.ItemTagsDataFullName);
@@ -133,7 +158,7 @@ namespace D2Traderie.Project.Models
             return Listings;
         }
 
-        public List<ItemPropertyEntity> GetItemPropertyNumericEntities(uint itemID)
+        public List<ItemPropertyEntity> GetItemPropertyNumericEntities(ulong itemID)
         {
             var item = Items.Where(i => i.Id == itemID).FirstOrDefault();
             var numericProperties = item.Properties.Where(p => p.Type == "number").ToList();
@@ -151,12 +176,12 @@ namespace D2Traderie.Project.Models
             return Items.Where(i => i.Name == itemName).FirstOrDefault();
         }
 
-        public ItemEntity GetItem(uint itemID)
+        public ItemEntity GetItem(ulong itemID)
         {
             return Items.Where(i => i.Id == itemID).FirstOrDefault();
         }
 
-        public uint GetItemID(string itemName)
+        public ulong GetItemID(string itemName)
         {
             var item = Items.Where(i => i.Name == itemName).FirstOrDefault();
 

@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "pZZLZBcIo4eKrBwgJ8yJ4KDsLGMsQBRtz1pzubCVocDlAI/jyJCyvQJILZZ+cdkgXHUco+hO5R+6zA/4Fru3NA==",
+  "dgSpecHash": "pBZAYoMz7Wo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Seoner\\source\\repos\\D2Traderie\\D2Traderie.csproj",
+  "projectFilePath": "E:\\Repos\\D2Traderie\\D2Traderie.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Seoner\\.nuget\\packages\\dotnetprojects.wpftoolkit.input\\6.1.94\\dotnetprojects.wpftoolkit.input.6.1.94.nupkg.sha512",
-    "C:\\Users\\Seoner\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\micha\\.nuget\\packages\\dotnetprojects.wpftoolkit.input\\6.1.94\\dotnetprojects.wpftoolkit.input.6.1.94.nupkg.sha512",
+    "C:\\Users\\micha\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

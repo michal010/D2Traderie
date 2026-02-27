@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 namespace D2Traderie.Project.AppServices
 {
     public enum FilterOption { Null, Lower, Higher, Equal, LowerOrEqual, HigherOrEqual}
+    public enum SortOption
+    {
+        None,
+        PriceAscending,
+        PriceDescending,
+        PropertyAscending,
+        PropertyDescending
+    }
 
     class ItemFilterService
     {
@@ -16,6 +24,38 @@ namespace D2Traderie.Project.AppServices
         public ItemFilterService(Services services)
         {
             this.services = services;
+        }
+
+        public List<ListingEntity> GetSortedListings(List<ListingEntity> listings, SortOption sort, string propertyName = null)
+        {
+            switch (sort)
+            {
+                case SortOption.PriceAscending:
+                    return listings
+                        .OrderBy(l => l.GetPriceValues().Count > 0 ? l.GetPriceValues().Min() : ulong.MaxValue)
+                        .ToList();
+                case SortOption.PriceDescending:
+                    return listings
+                        .OrderByDescending(l => l.GetPriceValues().Count > 0 ? l.GetPriceValues().Min() : 0)
+                        .ToList();
+                case SortOption.PropertyAscending:
+                    return listings
+                        .OrderBy(l => GetPropertyValue(l, propertyName))
+                        .ToList();
+                case SortOption.PropertyDescending:
+                    return listings
+                        .OrderByDescending(l => GetPropertyValue(l, propertyName))
+                        .ToList();
+                default:
+                    return listings;
+            }
+        }
+
+        private int GetPropertyValue(ListingEntity listing, string propertyName)
+        {
+            if (listing.NumericProperties == null || propertyName == null) return 0;
+            var prop = listing.NumericProperties.FirstOrDefault(p => p.Property == propertyName);
+            return prop?.Number ?? 0;
         }
 
         public List<ListingEntity> GetFilteredListings(List<ListingEntity> listings, List<ItemPropertyEntity> itemProperties , FilterOption option, ulong RuneValue)
@@ -51,26 +91,36 @@ namespace D2Traderie.Project.AppServices
 
             return filteredListings;
         }
-
         private bool PropertyCheck(ListingEntity listing, List<ItemPropertyEntity> itemProperties)
         {
-            foreach(var itemProp in itemProperties)
+            if (listing.NumericProperties == null)
             {
-                PropertyEntity listingProperty = listing.NumericProperties.Where(p => p.Property == itemProp.Property).FirstOrDefault();
-                if (listingProperty == null && (itemProp.Min != null || itemProp.Max != null))
+                bool anyFilterSet = itemProperties.Any(p =>
+                    (p.Min != null && p.Min > 0) || (p.Max != null && p.Max > 0));
+                return !anyFilterSet;
+            }
+
+            foreach (var itemProp in itemProperties)
+            {
+                // Pomiń właściwości bez ustawionych filtrów
+                bool hasMin = itemProp.Min != null && itemProp.Min > 0;
+                bool hasMax = itemProp.Max != null && itemProp.Max > 0;
+
+                if (!hasMin && !hasMax)
+                    continue;
+
+                PropertyEntity listingProperty = listing.NumericProperties
+                    .Where(p => p.Property == itemProp.Property)
+                    .FirstOrDefault();
+
+                if (listingProperty == null)
                     return false;
-                if (itemProp.Min != null)
-                {
-                    if (listingProperty.Number >= itemProp.Min)
-                        continue;
-                    else return false;
-                }
-                if(itemProp.Max != null)
-                {
-                    if (listingProperty.Number <= itemProp.Max)
-                        continue;
-                    else return false;
-                }
+
+                if (hasMin && listingProperty.Number < itemProp.Min)
+                    return false;
+
+                if (hasMax && listingProperty.Number > itemProp.Max)
+                    return false;
             }
             return true;
         }
