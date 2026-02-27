@@ -59,3 +59,10 @@ E:\Repos\D2Traderie\obj\Debug\net5.0-windows\refint\D2Traderie.dll
 E:\Repos\D2Traderie\obj\Debug\net5.0-windows\D2Traderie.pdb
 E:\Repos\D2Traderie\obj\Debug\net5.0-windows\D2Traderie.genruntimeconfig.cache
 E:\Repos\D2Traderie\obj\Debug\net5.0-windows\ref\D2Traderie.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\Resources\tessdata\eng.traineddata
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\x86\leptonica-1.82.0.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\x86\tesseract50.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\x64\leptonica-1.82.0.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\x64\tesseract50.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\Tesseract.dll
+E:\Repos\D2Traderie\bin\Debug\net5.0-windows\FuzzySharp.dll

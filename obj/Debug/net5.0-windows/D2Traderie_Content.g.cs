@@ -9,5 +9,6 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/fonts/exocet.ttf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/tessdata/eng.traineddata")]
 
 

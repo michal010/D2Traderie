@@ -11,12 +11,14 @@ namespace D2Traderie.Project.AppServices
         public Database Database;
         public ItemFilterService FilterService;
         public MainWindow MainWindow; //pass it to some views service.
+        public OcrService OcrService;
 
         public Services(MainWindow windowReference)
         {
             this.MainWindow = windowReference;
             HttpSerivce = new HttpService();
             SettingsService = new SettingsService(this);
+            OcrService = new OcrService(this);
             EndpointService = new EndpointService();
             FileService = new FileService();
             FilterService = new ItemFilterService(this);

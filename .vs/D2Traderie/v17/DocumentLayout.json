@@ -7,8 +7,28 @@
       "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\appservices\\ocrservice\\ocrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\appservices\\ocrservice\\ocrservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\appservices\\itemfilterservice\\itemfilterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\appservices\\itemfilterservice\\itemfilterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\d2traderie.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:d2traderie.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\consts\\runesvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\consts\\runesvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\appservices\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\appservices\\services.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\models\\priceentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\models\\priceentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -44,10 +64,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\models\\itementity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\models\\itementity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|e:\\repos\\d2traderie\\project\\models\\priceentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EC102598-5592-45B9-9BEC-ABDFC674413A}|D2Traderie.csproj|solutionrelative:project\\models\\priceentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -57,35 +73,87 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RunesValue.cs",
+              "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Consts\\RunesValue.cs",
+              "RelativeDocumentMoniker": "Project\\Consts\\RunesValue.cs",
+              "ToolTip": "E:\\Repos\\D2Traderie\\Project\\Consts\\RunesValue.cs",
+              "RelativeToolTip": "Project\\Consts\\RunesValue.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T22:02:56.193Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Services.cs",
+              "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\AppServices\\Services.cs",
+              "RelativeDocumentMoniker": "Project\\AppServices\\Services.cs",
+              "ToolTip": "E:\\Repos\\D2Traderie\\Project\\AppServices\\Services.cs",
+              "RelativeToolTip": "Project\\AppServices\\Services.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T21:36:04.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "OcrService.cs",
+              "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\AppServices\\OcrService\\OcrService.cs",
+              "RelativeDocumentMoniker": "Project\\AppServices\\OcrService\\OcrService.cs",
+              "ToolTip": "E:\\Repos\\D2Traderie\\Project\\AppServices\\OcrService\\OcrService.cs",
+              "RelativeToolTip": "Project\\AppServices\\OcrService\\OcrService.cs",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAmwBYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T21:33:55.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "D2Traderie",
+              "DocumentMoniker": "E:\\Repos\\D2Traderie\\D2Traderie.csproj",
+              "RelativeDocumentMoniker": "D2Traderie.csproj",
+              "ToolTip": "E:\\Repos\\D2Traderie\\D2Traderie.csproj",
+              "RelativeToolTip": "D2Traderie.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-02-27T21:31:43.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ItemFilterService.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\AppServices\\ItemFilterService\\ItemFilterService.cs",
               "RelativeDocumentMoniker": "Project\\AppServices\\ItemFilterService\\ItemFilterService.cs",
               "ToolTip": "E:\\Repos\\D2Traderie\\Project\\AppServices\\ItemFilterService\\ItemFilterService.cs",
               "RelativeToolTip": "Project\\AppServices\\ItemFilterService\\ItemFilterService.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAgwF0AAABiAAAAAAAAAA==",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAgwE8AAABvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T17:51:41.559Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "XamlReader.cs",
               "DocumentMoniker": "C:\\Users\\micha\\AppData\\Local\\Temp\\.vsdbgsrc\\eb3a3275bba5aec1ff6a74da50ecc2ce6a9b665f26d69e00aefecac08c152790\\XamlReader.cs",
-              "ToolTip": "C:\\Users\\micha\\AppData\\Local\\Temp\\.vsdbgsrc\\eb3a3275bba5aec1ff6a74da50ecc2ce6a9b665f26d69e00aefecac08c152790\\XamlReader.cs[Tylko do odczytu]",
+              "ToolTip": "C:\\Users\\micha\\AppData\\Local\\Temp\\.vsdbgsrc\\eb3a3275bba5aec1ff6a74da50ecc2ce6a9b665f26d69e00aefecac08c152790\\XamlReader.cs",
               "ViewState": "AgIAAKABAAAAAAAAAAASwLgBAABjAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T17:26:53.163Z",
-              "EditorCaption": "[Tylko do odczytu]"
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "Items.json",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\bin\\Debug\\net5.0-windows\\Data\\Items.json",
               "RelativeDocumentMoniker": "bin\\Debug\\net5.0-windows\\Data\\Items.json",
@@ -98,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -110,7 +178,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "PropertyEntity.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\PropertyEntity.cs",
               "RelativeDocumentMoniker": "Project\\Models\\PropertyEntity.cs",
@@ -123,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "EndpointService.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\AppServices\\EndpointService\\EndpointService.cs",
               "RelativeDocumentMoniker": "Project\\AppServices\\EndpointService\\EndpointService.cs",
@@ -142,14 +210,14 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "E:\\Repos\\D2Traderie\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAABkBAAAAAAAAAAAAAD0BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHABAAAAAAAAAAAAAH0BAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T16:26:26.746Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "Database.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\Database.cs",
               "RelativeDocumentMoniker": "Project\\Models\\Database.cs",
@@ -162,20 +230,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "ItemPropertyEntity.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\ItemPropertyEntity.cs",
               "RelativeDocumentMoniker": "Project\\Models\\ItemPropertyEntity.cs",
               "ToolTip": "E:\\Repos\\D2Traderie\\Project\\Models\\ItemPropertyEntity.cs",
               "RelativeToolTip": "Project\\Models\\ItemPropertyEntity.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABgAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAABQwBgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T16:24:42.863Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "ItemEntity.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\ItemEntity.cs",
               "RelativeDocumentMoniker": "Project\\Models\\ItemEntity.cs",
@@ -188,26 +256,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 6,
               "Title": "PriceEntity.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\PriceEntity.cs",
               "RelativeDocumentMoniker": "Project\\Models\\PriceEntity.cs",
               "ToolTip": "E:\\Repos\\D2Traderie\\Project\\Models\\PriceEntity.cs",
               "RelativeToolTip": "Project\\Models\\PriceEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAwwAsAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T16:24:05.032Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "ListingEntity.cs",
               "DocumentMoniker": "E:\\Repos\\D2Traderie\\Project\\Models\\ListingEntity.cs",
               "RelativeDocumentMoniker": "Project\\Models\\ListingEntity.cs",
               "ToolTip": "E:\\Repos\\D2Traderie\\Project\\Models\\ListingEntity.cs",
               "RelativeToolTip": "Project\\Models\\ListingEntity.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAA3wDcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAYwDcAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-27T16:22:36.693Z",
               "EditorCaption": ""

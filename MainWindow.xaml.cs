@@ -343,5 +343,66 @@ namespace D2Traderie
         {
             loadingStatusLabel.Content = message;
         }
+
+        #region ORC
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            var helper = new System.Windows.Interop.WindowInteropHelper(this);
+            services.OcrService.RegisterHotkey(helper.Handle);
+
+            // Podłącz handler wiadomości Windows
+            System.Windows.Interop.HwndSource source =
+                System.Windows.Interop.HwndSource.FromHwnd(helper.Handle);
+            source.AddHook(WndProc);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            var helper = new System.Windows.Interop.WindowInteropHelper(this);
+            services.OcrService.UnregisterHotkey(helper.Handle);
+            base.OnClosed(e);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_HOTKEY = 0x0312;
+            if (msg == WM_HOTKEY && services.OcrService.IsOurHotkey(wParam.ToInt32()))
+            {
+                OnHotkeyPressed();
+                handled = true;
+            }
+            return IntPtr.Zero;
+        }
+
+        private async void OnHotkeyPressed()
+        {
+            ShowLoading("Rozpoznawanie itemu...");
+            var result = await Task.Run(() => services.OcrService.CaptureAndRecognize());
+            HideLoading();
+
+            if (result.Success)
+            {
+                SelectedItemName = result.ItemName;
+                SearchBar.Text = result.ItemName;
+                RefreshSelectedItemUI();
+
+                ShowLoading($"Pobieranie listingów dla: {result.ItemName}");
+                ulong itemID = services.Database.GetItemID(result.ItemName);
+                await services.Database.DownloadListings(itemID, DepthOfSearch);
+                HideLoading();
+
+                // ← zamiast MessageBox
+                Console.WriteLine("OCR sukces:");
+                Console.WriteLine($"  ItemName: {result.ItemName}");
+                Console.WriteLine($"  RawText:  {result.RawText.Replace("\n", " | ")}");
+            }
+            else
+            {
+                Console.WriteLine("OCR niepowodzenie:");
+                Console.WriteLine($"  Komunikat: {result.RawText}");
+            }
+        }
+        #endregion
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("D2Traderie")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c2aa8508f8b1cceaee3e8d1e0fca53a55726f40")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c40ecdc637f42597663da1d4eb0d16663b6d7c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("D2Traderie")]
 [assembly: System.Reflection.AssemblyTitleAttribute("D2Traderie")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
