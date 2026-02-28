@@ -339,84 +339,156 @@
             </TabItem>
 
             <!-- ==================== ZAKŁADKA SEARCH OPTIONS ==================== -->
+            <!-- Zastąp istniejący TabItem "Search Options" tym kodem -->
             <TabItem Header="Search Options" Foreground="White" Margin="40,0,-40,0" Height="20" Width="80">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="17*"/>
-                        <ColumnDefinition Width="777*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Margin="0,0,-5,12" Grid.ColumnSpan="2">
-                        <Border BorderThickness="1" Height="130" CornerRadius="3,3,3,3"
-                                Background="#FF242526" Margin="15,15,15,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#FF18191A">
+                    <StackPanel Margin="15,15,15,15">
+
+                        <!-- PLATFORM -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
                             <StackPanel>
-                                <StackPanel Height="30" Width="737">
-                                    <Label x:Name="LabelSettings" Content="Filter Options"
-                                           FontWeight="Normal" FontFamily="Arial" FontSize="16"
-                                           Foreground="White" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="GeneralLabel" Content="General" HorizontalAlignment="Center" Foreground="White"/>
-                                        <CheckBox x:Name="CheckBoxEtheral" Content="Etheral" Foreground="White" Margin="0,10,0,0" IsChecked="{Binding SearchSettings.Etheral}"/>
-                                        <CheckBox x:Name="CheckBoxLadder" Content="Ladder" Foreground="White" IsChecked="{Binding SearchSettings.Ladder}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="ModeLabel" Content="Mode" HorizontalAlignment="Center" Foreground="White"/>
-                                        <RadioButton x:Name="RBSoftcore" Content="Softcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.Softcore}"/>
-                                        <RadioButton x:Name="RBSoftcore_Copy" Content="Hardcore" GroupName="Mode" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" IsChecked="{Binding SearchSettings.Hardcore}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="RegionLabel" Content="Region" HorizontalAlignment="Center" Foreground="White"/>
-                                        <CheckBox x:Name="CheckBoxAsia" Content="Asia" Foreground="White" HorizontalAlignment="Left" Margin="0,10,0,0" IsChecked="{Binding SearchSettings.Asia}"/>
-                                        <CheckBox x:Name="CheckBoxAmerica" Content="America" Foreground="White" IsChecked="{Binding SearchSettings.America}"/>
-                                        <CheckBox x:Name="CheckBoxEurope" Content="Europe" Foreground="White" IsChecked="{Binding SearchSettings.Europe}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="IndentifiedLabel" Content="Identified" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
-                                        <RadioButton x:Name="RBIdentifiedAll" Content="All" GroupName="Identify" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllIdentified}"/>
-                                        <RadioButton x:Name="RBIdentified" Content="Identified" GroupName="Identify" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Identified}"/>
-                                        <RadioButton x:Name="RBUnidentified" Content="Unidentified" GroupName="Identify" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Unidentified}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="MakeOffersLabel" Content="MakeOffers" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
-                                        <RadioButton x:Name="RBOffersAll" Content="All" GroupName="Makeoffers" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllOffers}"/>
-                                        <RadioButton x:Name="RBOffersOnly" Content="Make offers" GroupName="Makeoffers" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.MakeOffers}"/>
-                                        <RadioButton x:Name="RBDefinedOffers" Content="Defined offers" GroupName="Makeoffers" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.DefinedOffers}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="UpgradedLabel" Content="Upgraded" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
-                                        <RadioButton x:Name="RBUpgradedAll" Content="All" GroupName="Upgraded" HorizontalAlignment="Left" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.AllUpgraded}"/>
-                                        <RadioButton x:Name="RBUpgradedOnly" Content="Upgraded only" GroupName="Upgraded" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.OnlyUpgraded}"/>
-                                        <RadioButton x:Name="RBNotUpgraded" Content="Not upgraded" GroupName="Upgraded" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.NotUpgraded}"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Vertical" Width="100" Height="100">
-                                        <Label x:Name="PlatformLabel" Content="Platform" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Center"/>
-                                        <RadioButton x:Name="RBPC" Content="PC" GroupName="Platform" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,10,0,0" Foreground="White" IsChecked="{Binding SearchSettings.PC}"/>
-                                        <RadioButton x:Name="RBSwitch" Content="Switch" GroupName="Platform" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Switch}"/>
-                                        <RadioButton x:Name="RBPlaystation" Content="Playstation" GroupName="Platform" Foreground="White" HorizontalAlignment="Left" IsChecked="{Binding SearchSettings.Playstation}"/>
-                                        <RadioButton x:Name="RBXbox" Content="xBox" GroupName="Platform" Foreground="White" IsChecked="{Binding SearchSettings.xBox}"/>
-                                    </StackPanel>
+                                <Label Content="Platform" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <CheckBox Content="PC"          Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.PC}"/>
+                                    <CheckBox Content="Switch"      Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.Switch}"/>
+                                    <CheckBox Content="Playstation" Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.Playstation}"/>
+                                    <CheckBox Content="Xbox"        Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.xBox}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
 
-                        <Label x:Name="label1" Content="Settings changes not implemented yet!"
-                               FontSize="20" Foreground="Red"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <!-- MODE -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Mode" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <RadioButton Content="Softcore" GroupName="Mode" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.Softcore}"/>
+                                    <RadioButton Content="Hardcore" GroupName="Mode" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.Hardcore}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
 
-                        <Button x:Name="refreshDbButton"
-                                Content="Refresh DB"
-                                Click="OnRefreshDbClicked"
-                                Height="40" Width="200"
-                                FontFamily="./Resources/Fonts/#Exocet"
-                                Foreground="White"
-                                Background="#FF242526"
-                                BorderBrush="#FFD4CFAA"
-                                Margin="0,20,0,0"
-                                HorizontalAlignment="Center"/>
+                        <!-- LADDER -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Ladder" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <CheckBox Content="Ladder"     Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.Ladder}"/>
+                                    <CheckBox Content="Non-Ladder" Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.NonLadder}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- GAME VERSION -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Game Version" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <CheckBox Content="Classic"              Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.GameVersionClassic}"/>
+                                    <CheckBox Content="Lord of Destruction"  Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.GameVersionLOD}"/>
+                                    <CheckBox Content="Reign of the Warlock" Foreground="White" Margin="8,0" IsChecked="{Binding SearchSettings.GameVersionROTW}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- IDENTIFIED -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Identified" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <RadioButton Content="All"          GroupName="Identify" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.AllIdentified}"/>
+                                    <RadioButton Content="Identified"   GroupName="Identify" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.Identified}"/>
+                                    <RadioButton Content="Unidentified" GroupName="Identify" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.Unidentified}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- ETHEREAL -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Ethereal" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <RadioButton Content="All"          GroupName="Ethereal" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.EtherealAll}"/>
+                                    <RadioButton Content="Ethereal"     GroupName="Ethereal" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.Ethereal}"/>
+                                    <RadioButton Content="Not Ethereal" GroupName="Ethereal" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.NotEthereal}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- MAKE OFFER -->
+                        <Border BorderThickness="1" CornerRadius="3" Background="#FF242526"
+                    BorderBrush="#55D4CFAA" Margin="0,0,0,10" Padding="12,10">
+                            <StackPanel>
+                                <Label Content="Offers" Foreground="#FFD4CFAA"
+                           FontFamily="./Resources/Fonts/#Exocet" FontSize="14"
+                           HorizontalAlignment="Center" Margin="0,0,0,6"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <RadioButton Content="All"            GroupName="Offers" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.AllOffers}"/>
+                                    <RadioButton Content="Make Offers"    GroupName="Offers" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.MakeOffers}"/>
+                                    <RadioButton Content="Defined Offers" GroupName="Offers" Foreground="White" Margin="8,0"
+                                     IsChecked="{Binding SearchSettings.DefinedOffers}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+
+                            <!-- Refresh DB z popupem potwierdzającym -->
+                            <Button x:Name="refreshDbButton"
+            Content="Refresh DB"
+            Click="OnRefreshDbClicked"
+            Height="40" Width="160"
+            FontFamily="./Resources/Fonts/#Exocet"
+            Foreground="White"
+            Background="#FF242526"
+            BorderBrush="#FFD4CFAA"
+            Margin="0,0,10,0"/>
+
+                            <!-- Refresh Values — pobiera aktualne ceny walut -->
+                            <Button x:Name="refreshValuesButton"
+            Content="Refresh Values"
+            Click="OnRefreshValuesClicked"
+            Height="40" Width="160"
+            FontFamily="./Resources/Fonts/#Exocet"
+            Foreground="White"
+            Background="#FF242526"
+            BorderBrush="#FFD4CFAA"/>
+
+                        </StackPanel>
+
+
                     </StackPanel>
-                </Grid>
+                </ScrollViewer>
             </TabItem>
+
 
         </TabControl>
 

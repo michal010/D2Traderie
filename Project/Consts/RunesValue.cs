@@ -1,54 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace D2Traderie.Project.Consts
 {
+    /// <summary>
+    /// Wartości walut przeliczone na jednostki całkowite (user_value * 10000).
+    /// Ber Rune = 35000, El Rune = 8, Perfect Amethyst = 27 itd.
+    /// Źródło: https://traderie.com/api/diablo2resurrected/items/values
+    /// </summary>
     public static class RunesValue
     {
-        public static readonly List<string> Runes = new List<string>()
-        {
-            "Zod Rune", "Cham Rune", "Jah Rune", "Ber Rune", "Sur Rune", "Lo Rune", "Ohm Rune", "Vex Rune", "Gul Rune", "Ist Rune", "Mal Rune", "Um Rune", "Pul Rune", "Lem Rune", "Fal Rune", "Ko Rune", "Lum Rune", "Io Rune", "Hel Rune", "Dol Rune", "Shael Rune", "Sol Rune", "Amn Rune", "Thul Rune", "Ort Rune", "Ral Rune", "Tal Rune",
-            "Ith Rune", "Eth Rune", "Nef Rune", "Tir Rune", "Eld Rune", "El Rune"
-        };
+        // Lista wyświetlana w UI (kolejność od najcenniejszych)
+        public static List<string> Runes => RuneValues.Keys.ToList();
 
         public static Dictionary<string, ulong> RuneValues = new Dictionary<string, ulong>()
         {
-            { "Zod Rune", 14281868906496},
-            { "Cham Rune", 7140934453248},
-            { "Jah Rune", 3570467226624},
-            { "Ber Rune", 1785233613312},
-            { "Sur Rune", 892616806656},
-            { "Lo Rune", 446308403328},
-            { "Ohm Rune", 223154201664},
-            { "Vex Rune", 111577100832},
-            { "Gul Rune", 55788550416},
-            { "Ist Rune", 27894275208},
-            { "Mal Rune", 13947137604},
-            { "Um Rune", 6973568802},
-            { "Pul Rune", 3486784401},
-            { "Lem Rune", 1162261467},
-            { "Fal Rune", 387420489},
-            { "Ko Rune", 129140163},
-            { "Lum Rune", 43046721},
-            { "Io Rune", 14348907},
-            { "Hel Rune", 4782969},
-            { "Dol Rune", 1594323},
-            { "Shael Rune", 531441},
-            { "Sol Rune", 177147},
-            { "Amn Rune", 59049},
-            { "Thul Rune", 19683},
-            { "Ort Rune", 6561},
-            { "Ral Rune", 2187},
-            { "Tal Rune", 729},
-            { "Ith Rune", 243},
-            { "Eth Rune", 81},
-            { "Nef Rune", 27},
-            { "Tir Rune", 9},
-            { "Eld Rune", 3},
-            { "El Rune", 1}
+            // === RUNY ===
+            { "Ber Rune",   35000 },
+            { "Jah Rune",   30000 },
+            { "Sur Rune",   17500 },
+            { "Lo Rune",    12500 },
+            { "Zod Rune",    9000 },
+            { "Ohm Rune",    7500 },
+            { "Vex Rune",    5000 },
+            { "Cham Rune",   4000 },
+            { "Gul Rune",    2500 },
+            { "Ist Rune",    1600 },
+            { "Mal Rune",    1000 },
+            { "Um Rune",      600 },
+            { "Pul Rune",     400 },
+            { "Lem Rune",     200 },
+            { "Fal Rune",     100 },
+            { "Ko Rune",      100 },
+            { "Lum Rune",     100 },
+            { "Io Rune",       16 },
+            { "Hel Rune",      16 },
+            { "Dol Rune",       8 },
+            { "Shael Rune",     8 },
+            { "Sol Rune",       8 },
+            { "Amn Rune",       8 },
+            { "Thul Rune",      8 },
+            { "Ort Rune",       8 },
+            { "Ral Rune",       8 },
+            { "Tal Rune",       8 },
+            { "Ith Rune",       8 },
+            { "Eth Rune",       8 },
+            { "Nef Rune",       8 },
+            { "Tir Rune",       8 },
+            { "Eld Rune",       8 },
+            { "El Rune",        8 },
+
+            // === GEMY ===
+            { "Perfect Amethyst",  27 },
+            { "Perfect Topaz",      8 },
+            { "Perfect Ruby",       8 },
+            { "Perfect Diamond",    8 },
+            { "Perfect Emerald",    8 },
+            { "Perfect Sapphire",   8 },
+            { "Perfect Skull",      8 },
         };
     }
 }

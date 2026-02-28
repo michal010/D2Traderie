@@ -16,5 +16,8 @@ namespace D2Traderie.Project.Consts
         public static readonly string ItemTagsDataName = "ItemTags";
         public static readonly string ItemTagsDataFullName = "ItemTags.json";
         //public static string DataPath => Path.GetDirectoryName(Application.)
+        public static readonly string ValuesFileDataFullName = "Values.json";
+        public static readonly string ValuesEndpoint = "https://traderie.com/api/diablo2resurrected/items/values";
+
     }
 }

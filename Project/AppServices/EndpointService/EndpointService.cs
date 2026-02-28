@@ -1,60 +1,90 @@
 ﻿using D2Traderie.Project.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace D2Traderie.Project.AppServices
 {
     class EndpointService
     {
-        public EndpointService()
-        {
-
-        }
+        public EndpointService() { }
 
         public string GetItemsEndpoint(int page)
         {
-            IEndpoint baseEndpoint = new Endpoint();
-            IEndpoint itemsEndpointDecorator = new EndpointItemsDecorator(baseEndpoint);
-            IEndpoint questionMarkDecorator = new EndpointQuestionMarkDecorator(itemsEndpointDecorator);
-            IEndpoint propertiesDecorator = new EndpointItemPropertiesDecorator(questionMarkDecorator);
-            IEndpoint andEndpointDecorator = new EndpointAndDecorator(propertiesDecorator);
-            IEndpoint pageEndpointDecorator = new EndpointPageDecorator(andEndpointDecorator, page);
-            return pageEndpointDecorator.GetEndpointURL();
+            IEndpoint e = new Endpoint();
+            e = new EndpointItemsDecorator(e);
+            e = new EndpointQuestionMarkDecorator(e);
+            e = new EndpointItemPropertiesDecorator(e);
+            e = new EndpointAndDecorator(e);
+            e = new EndpointPageDecorator(e, page);
+            return e.GetEndpointURL();
         }
 
         public string GetTagsEndpoint()
         {
-            IEndpoint baseEndpoint = new Endpoint();
-            IEndpoint tagsEndpointDecorator = new EndpointTagsDecorator(baseEndpoint);
-            IEndpoint itemsEndpointDecorator = new EndpointItemsDecorator(tagsEndpointDecorator);
-            return itemsEndpointDecorator.GetEndpointURL();
+            IEndpoint e = new Endpoint();
+            e = new EndpointTagsDecorator(e);
+            e = new EndpointItemsDecorator(e);
+            return e.GetEndpointURL();
         }
 
-        public string GetListingEndpoint(ulong itemID, int page)
+        public string GetListingEndpoint(ulong itemID, int page, SearchSettings settings = null)
         {
-            IEndpoint baseEndpoint = new Endpoint();
-            IEndpoint listingEndpoint = new EndpointListingsDecorator(baseEndpoint);
-            IEndpoint itemEndpointDecorator = new EndpointItemDecorator(listingEndpoint, itemID.ToString());
-            IEndpoint andEndpointDecorator = new EndpointAndDecorator(itemEndpointDecorator);
-            //Property decorator
-            IEndpoint propertyDecoratorPlatform = new EndpointPropertyDecorator(andEndpointDecorator, "prop_Platform", "PC");
-            IEndpoint andEndpointDecorator2 = new EndpointAndDecorator(propertyDecoratorPlatform);
-            IEndpoint propertyDecoratorMode = new EndpointPropertyDecorator(andEndpointDecorator2, "prop_Mode", "softcore");
-            IEndpoint andEndpointDecorator3 = new EndpointAndDecorator(propertyDecoratorMode);
-            IEndpoint propertyDecoratorLadder = new EndpointPropertyDecorator(andEndpointDecorator3, "prop_Ladder", "true");
-            IEndpoint andEndpointDecorator4 = new EndpointAndDecorator(propertyDecoratorLadder);
-            IEndpoint propertyDecoratorOffers = new EndpointPropertyDecorator(andEndpointDecorator4, "makeOffer", "false");
-            IEndpoint andEndpointDecorator5 = new EndpointAndDecorator(propertyDecoratorOffers);
-            IEndpoint propertyDecoratorEthereal = new EndpointPropertyDecorator(andEndpointDecorator5, "prop_Ethereal", "false");
-            //end of property decorators... has to be done better
-            IEndpoint andEndpointDecorator6 = new EndpointAndDecorator(propertyDecoratorEthereal);
-            IEndpoint pageEndpointDecorator = new EndpointPageDecorator(andEndpointDecorator6, page);
-            return pageEndpointDecorator.GetEndpointURL();
+            if (settings == null)
+                settings = new SearchSettings();
+
+            IEndpoint e = new Endpoint();
+            e = new EndpointListingsDecorator(e);
+            // EndpointItemDecorator dodaje ?item=ID — od tej pory używamy tylko &
+            e = new EndpointItemDecorator(e, itemID.ToString());
+
+            var parameters = BuildParameters(settings, page);
+            foreach (var (key, value) in parameters)
+            {
+                e = new EndpointAndDecorator(e);
+                e = new EndpointPropertyDecorator(e, key, value);
+            }
+
+            string url = e.GetEndpointURL();
+            Console.WriteLine($"[ENDPOINT] {url}");
+            return url;
         }
 
+        private List<(string key, string value)> BuildParameters(SearchSettings s, int page)
+        {
+            var p = new List<(string, string)>();
 
+            string platform = s.GetPlatformParam();
+            if (!string.IsNullOrEmpty(platform))
+                p.Add(("prop_Platform", Uri.EscapeDataString(platform)));
+
+            string mode = s.GetModeParam();
+            if (!string.IsNullOrEmpty(mode))
+                p.Add(("prop_Mode", Uri.EscapeDataString(mode)));
+
+            string ladder = s.GetLadderParam();
+            if (!string.IsNullOrEmpty(ladder))
+                p.Add(("prop_Ladder", Uri.EscapeDataString(ladder)));
+
+            string gameVersion = s.GetGameVersionParam();
+            if (!string.IsNullOrEmpty(gameVersion))
+                p.Add(("prop_Game%20version", gameVersion));
+
+            string unidentified = s.GetUnidentifiedParam();
+            if (!string.IsNullOrEmpty(unidentified))
+                p.Add(("prop_Unidentified", unidentified));
+
+            string ethereal = s.GetEtherealParam();
+            if (!string.IsNullOrEmpty(ethereal))
+                p.Add(("prop_Ethereal", ethereal));
+
+            string makeOffer = s.GetMakeOfferParam();
+            if (!string.IsNullOrEmpty(makeOffer))
+                p.Add(("makeOffer", makeOffer));
+
+            // page zawsze na końcu
+            p.Add(("page", page.ToString()));
+
+            return p;
+        }
     }
 }

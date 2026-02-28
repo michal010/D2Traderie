@@ -249,19 +249,43 @@ namespace D2Traderie
             searchButton.IsEnabled = false;
             ShowLoading("Pobieranie listingów...");
             ulong itemID = services.Database.GetItemID(SelectedItemName);
-            await services.Database.DownloadListings(itemID, DepthOfSearch);
+            await services.Database.DownloadListings(itemID, DepthOfSearch, SearchSettings);
             HideLoading();
             searchButton.IsEnabled = true;
         }
 
         private async void OnRefreshDbClicked(object sender, RoutedEventArgs e)
         {
+            var result = MessageBox.Show(
+                "Czy na pewno chcesz odświeżyć bazę danych?\nOperacja może potrwać kilka minut.",
+                "Potwierdzenie",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+                return;
+
             refreshDbButton.IsEnabled = false;
             ShowLoading("Pobieranie bazy itemów...");
             await services.Database.RefreshDatabase();
             HideLoading();
             refreshDbButton.IsEnabled = true;
         }
+        private async void OnRefreshValuesClicked(object sender, RoutedEventArgs e)
+        {
+            refreshValuesButton.IsEnabled = false;
+            ShowLoading("Pobieranie wartości walut...");
+            await services.Database.RefreshValues();
+            HideLoading();
+            refreshValuesButton.IsEnabled = true;
+
+            MessageBox.Show(
+                "Wartości walut zostały zaktualizowane.",
+                "Gotowe",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
         private void RefreshSelectedItemUI()
         {
             if (SelectedItemName == null) return;
@@ -296,6 +320,7 @@ namespace D2Traderie
 
         private void OnFilterButtonClicked(object sender, RoutedEventArgs e)
         {
+
             if (services.Database.Listings == null || services.Database.Listings.Count <= 0)
                 return;
 
@@ -341,7 +366,8 @@ namespace D2Traderie
 
         public void UpdateLoadingMessage(string message)
         {
-            loadingStatusLabel.Content = message;
+            if(loadingStatusLabel != null)
+                loadingStatusLabel.Content = message;
         }
 
         #region ORC
@@ -385,22 +411,43 @@ namespace D2Traderie
             {
                 SelectedItemName = result.ItemName;
                 SearchBar.Text = result.ItemName;
-                RefreshSelectedItemUI();
+
+                // Pobierz item z bazy
+                ulong itemID = services.Database.GetItemID(result.ItemName);
+                var item = services.Database.GetItem(itemID);
+
+                if (item != null)
+                {
+                    // === NOWE: fuzzy match OCR properties → auto-uzupełnij filtry ===
+                    var matchedProperties = services.Database.MatchDetectedPropertiesToItem(
+                        item,
+                        result.DetectedProperties
+                    );
+
+                    SelectedItemProperties = matchedProperties;
+                    SelectedItemImageURL = services.Database.GetItemImage(item);
+                    OnPropertyChanged(nameof(SelectedItemPropertyNames));
+
+                    int filledCount = matchedProperties.Count(p => p.Min != null);
+                    Console.WriteLine($"[OCR] Auto-uzupełniono {filledCount}/{matchedProperties.Count} właściwości");
+                }
+                else
+                {
+                    // Fallback: brak itemu w bazie, normalny refresh UI
+                    RefreshSelectedItemUI();
+                }
 
                 ShowLoading($"Pobieranie listingów dla: {result.ItemName}");
-                ulong itemID = services.Database.GetItemID(result.ItemName);
                 await services.Database.DownloadListings(itemID, DepthOfSearch);
                 HideLoading();
 
-                // ← zamiast MessageBox
-                Console.WriteLine("OCR sukces:");
-                Console.WriteLine($"  ItemName: {result.ItemName}");
-                Console.WriteLine($"  RawText:  {result.RawText.Replace("\n", " | ")}");
+                Console.WriteLine($"[OCR] Sukces: {result.ItemName}");
+                Console.WriteLine($"[OCR] Raw text: {result.RawText.Replace("\n", " | ")}");
             }
             else
             {
-                Console.WriteLine("OCR niepowodzenie:");
-                Console.WriteLine($"  Komunikat: {result.RawText}");
+                HideLoading();
+                Console.WriteLine($"[OCR] Niepowodzenie: {result.RawText}");
             }
         }
         #endregion
